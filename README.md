@@ -1,8 +1,8 @@
 # Dual-SLAM: A framework for robust single camera navigation
 
-<div width="1234px">
-    <img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/framework.png" alt="framework" style="width:617px;height:448px;">
-    <img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/recovery.png" alt="recovery" style="width:617px;height:499px;">
+<div width="1234">
+    <img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/framework.png" alt="framework" style="width:300;height:448;">
+    <img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/recovery.png" alt="recovery" style="width:300;height:499;">
 </div>
 
 ## Publication:
@@ -83,6 +83,6 @@ You will need to create a settings file with the calibration of your camera. See
 
 ### Reference
 
-[Monocular] Raúl Mur-Artal, J. M. M. Montiel and Juan D. Tardós. **ORB-SLAM: A Versatile and Accurate Monocular SLAM System**. *IEEE Transactions on Robotics,* vol. 31, no. 5, pp. 1147-1163, 2015. (**2015 IEEE Transactions on Robotics Best Paper Award**). **[PDF](http://webdiis.unizar.es/~raulmur/MurMontielTardosTRO15.pdf)**.
+[ORB-SLAM] Raúl Mur-Artal, J. M. M. Montiel and Juan D. Tardós. ORB-SLAM: A Versatile and Accurate Monocular SLAM System. *IEEE Transactions on Robotics,* vol. 31, no. 5, pp. 1147-1163, 2015.[PDF](http://webdiis.unizar.es/~raulmur/MurMontielTardosTRO15.pdf)**.
 
 
