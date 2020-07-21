@@ -1,12 +1,11 @@
 %YAML:1.0
 
-
 # 1:true; 0 false
 recoveryFlag: 1
 initByGMS: 1
 
 #sequence
-# 07 16 23-26 28-30 32 35 36 37 39 50-40 25      28 26
+# 07 08 16 23-26 28-32 35-50
 # 08 24  31 38 40 41 50
 sequenceDir: "/home/huajian/SLAMdataset/TUM/sequence_24"
 imageDir: "/uImages"

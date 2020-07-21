@@ -5,8 +5,8 @@
 recoveryFlag: 0
 initByGMS: 1
 
-sequenceDir: "/home/huajian/SLAMdataset/KITTI/03"
-imageDir: "/image_2"
+sequenceDir: "PATH/TO/SEQUENCE/FOLDER/03"
+imageDir: "/image_0"
 
 #--------------------------------------------------------------------------------------------
 # Camera Parameters. Adjust them!

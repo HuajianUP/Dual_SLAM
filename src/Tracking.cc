@@ -1125,8 +1125,7 @@ bool Tracking::TrackWithMotionModel()
         /************************************************************/
         if(initByGMS)
         {
-            nmatches = matcher.SearchByGMS(mCurrentFrame,mLastFrame,mvP3D,mvP2D);//
-            //nmatches = matcher.SearchByGMS(mCurrentFrame,mLastFrame);
+            nmatches = matcher.SearchByGMS(mCurrentFrame,mLastFrame);//
         }
         else
             nmatches = matcher.SearchByProjection(mCurrentFrame,mLastFrame,2*th,mSensor==System::MONOCULAR);
