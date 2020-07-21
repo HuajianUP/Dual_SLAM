@@ -56,9 +56,6 @@ void Tracking::SaveAndReset()
 {
     cout << "Save And Reset" << endl;
 
-    //if(nNewKeyFrame > 10)
-    //{
-    //}
     if(readyToRecover)
     {
         for(vector<KeyFrame*>::const_iterator itKF = mvpLocalKeyFrames.begin(); itKF != mvpLocalKeyFrames.end(); itKF++)
@@ -76,7 +73,6 @@ void Tracking::SaveAndReset()
         mvpLocalKeyFramesWhenBreak = mvpLocalKeyFrames;
         mvpLocalMapPointsWhenBreak.clear();
         mvpLocalMapPointsWhenBreak = mvpLocalMapPoints;
-        //mvpLocalKeyFramesWhenBreak.assign(mvpLocalKeyFrames.begin(), mvpLocalKeyFrames.end());
         frameSNWhenBreak = mpLastKeyFrame->FrameSN;
         KeyFrameIdWhenBreak = mpLastKeyFrame->mnId;
     }
@@ -108,13 +104,9 @@ void Tracking::SaveAndReset()
         delete mpInitializer;
         mpInitializer = static_cast<Initializer*>(NULL);
     }
-    //mlRelativeFramePoses.clear();
-    //mlpReferences.clear();
-    //mlFrameTimes.clear();
-    //mlbLost.clear();
     if(mpViewer)
         mpViewer->Release();
-    //mpLoopClosing->RequestStop();
+    mpLoopClosing->RequestStop();
     cout << "SaveAndReset Finished" << endl;
 }
 /************************************************************/
@@ -390,7 +382,7 @@ void Tracking::Track()
         /************************************************************/
         if(recoveryFlag)
         {
-            if(frameBuff.size() > (10 * mMaxFrames - 50))
+            if(frameBuff.size() > (10 * mMaxFrames))
             {    
                 frameBuff.pop_front();                   
             }
@@ -1133,32 +1125,8 @@ bool Tracking::TrackWithMotionModel()
         /************************************************************/
         if(initByGMS)
         {
-            cout<<"need PnP"<<endl;
-            vector<cv::Point2f> mvP2D;
-            vector<cv::Point3f> mvP3D;
             nmatches = matcher.SearchByGMS(mCurrentFrame,mLastFrame,mvP3D,mvP2D);//
             //nmatches = matcher.SearchByGMS(mCurrentFrame,mLastFrame);
-            if(0)//(nmatches>10)
-            {
-
-                cv::Mat rvec, tvec, inliers;
-                int iterationsCount = 50;      // number of Ransac iterations.
-                float reprojectionError = 5.99;  // maximum allowed distance to consider it an inlier.
-                double confidence = 0.99;        // ransac successful confidence.
-                cv::solvePnPRansac(mvP3D, mvP2D, mCurrentFrame.mK, mCurrentFrame.mDistCoef, rvec, tvec, false, iterationsCount, reprojectionError, confidence, inliers); //CV_EPNP
-                //re
-                /***************************/
-                // need remove outline. TBD
-
-                //cv::solvePnPRansac(p3d, p2d, K, cv::Mat(), R, t, false, 50, 8.0, 0.99, inliers,CV_EPNP);
-                cv::Mat R;
-                cv::Rodrigues(rvec, R); //罗德里格斯变换
-                
-                cv::Mat Tcw = cv::Mat::eye(4,4,CV_32F);
-                R.copyTo(Tcw.rowRange(0,3).colRange(0,3));
-                tvec.copyTo(Tcw.rowRange(0,3).col(3));
-                mCurrentFrame.SetPose(Tcw);        
-            }
         }
         else
             nmatches = matcher.SearchByProjection(mCurrentFrame,mLastFrame,2*th,mSensor==System::MONOCULAR);

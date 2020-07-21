@@ -44,6 +44,7 @@ const int ORBmatcher::HISTO_LENGTH = 30;
 
 
 /************************************************************/
+/*
 int ORBmatcher::SearchByGMS(Frame &CurrentFrame, KeyFrame* pKF, vector<cv::Point3f> &mvP3D, vector<cv::Point2f> & mvP2D) //recovery 
 {
     int nmatches=0;
@@ -83,6 +84,46 @@ int ORBmatcher::SearchByGMS(Frame &CurrentFrame, KeyFrame* pKF, vector<cv::Point
     }
     return nmatches;
 }
+
+int ORBmatcher::UpdateByGMS(KeyFrame* pKF,Frame &Frame)
+{
+    int nmatches=0;
+    int nmatchesEnd = 0;
+
+    vector<KeyPoint> kp1 = pKF->mvKeysUn;
+    vector<KeyPoint> kp2 = Frame.mvKeysUn;
+    Mat d1 = pKF->mDescriptors;
+    Mat d2 = Frame.mDescriptors;
+    vector<DMatch> matches_all,matches_gms;
+    BFMatcher matcher(NORM_HAMMING);
+    matcher.match(d1, d2, matches_all);
+    //cout<<"all matcher :"<<matches_all.size()<<endl;
+
+    std::vector<bool> vbInliers;
+    const Size frameSize= Frame.frameSize;
+    gms_matcher gms(kp1,frameSize, kp2,frameSize, matches_all);
+    nmatches = gms.GetInlierMask(vbInliers, false, false);
+    //cout<< "num_inliers after GMS :"<<num_inliers<<endl;
+
+    const vector<MapPoint*> vpMapPointsKF = pKF->GetMapPointMatches();
+
+    for (size_t i = 0; i < vbInliers.size(); ++i)
+    {
+        if (vbInliers[i] == true)
+        {
+            //matches_gms.push_back(matches_all[i]);
+            MapPoint* pMP = vpMapPointsKF[matches_all[i].queryIdx];
+            if(!pMP)
+                continue;
+            if(pMP->isBad())
+                continue;
+            Frame.mvpMapPoints[matches_all[i].trainIdx] = pMP;
+            nmatchesEnd++;
+        }
+    }
+    return nmatchesEnd;
+}
+*/
 int ORBmatcher::SearchByGMS(KeyFrame* pKF,Frame &Frame, vector<MapPoint*> &vpMapPointMatches, int& inliers) //
 {
     
@@ -125,87 +166,7 @@ int ORBmatcher::SearchByGMS(KeyFrame* pKF,Frame &Frame, vector<MapPoint*> &vpMap
 
 }
 
-int ORBmatcher::UpdateByGMS(KeyFrame* pKF,Frame &Frame)
-{
-    int nmatches=0;
-    int nmatchesEnd = 0;
 
-    vector<KeyPoint> kp1 = pKF->mvKeysUn;
-    vector<KeyPoint> kp2 = Frame.mvKeysUn;
-    Mat d1 = pKF->mDescriptors;
-    Mat d2 = Frame.mDescriptors;
-    vector<DMatch> matches_all,matches_gms;
-    BFMatcher matcher(NORM_HAMMING);
-    matcher.match(d1, d2, matches_all);
-    //cout<<"all matcher :"<<matches_all.size()<<endl;
-
-    std::vector<bool> vbInliers;
-    const Size frameSize= Frame.frameSize;
-    gms_matcher gms(kp1,frameSize, kp2,frameSize, matches_all);
-    nmatches = gms.GetInlierMask(vbInliers, false, false);
-    //cout<< "num_inliers after GMS :"<<num_inliers<<endl;
-
-    const vector<MapPoint*> vpMapPointsKF = pKF->GetMapPointMatches();
-
-    for (size_t i = 0; i < vbInliers.size(); ++i)
-    {
-        if (vbInliers[i] == true)
-        {
-            //matches_gms.push_back(matches_all[i]);
-            MapPoint* pMP = vpMapPointsKF[matches_all[i].queryIdx];
-            if(!pMP)
-                continue;
-            if(pMP->isBad())
-                continue;
-            Frame.mvpMapPoints[matches_all[i].trainIdx] = pMP;
-            nmatchesEnd++;
-        }
-    }
-    return nmatchesEnd;
-}
-/*
-int ORBmatcher::SearchByGMS(KeyFrame* pKF,Frame &Frame, vector<MapPoint*> &vpMapPointMatches) //tracking by reference
-{
-    
-    int nmatches=0;
-    int inliers = 0;
-    vpMapPointMatches = vector<MapPoint*>(Frame.N,static_cast<MapPoint*>(NULL));
-
-    vector<KeyPoint> kp1 = pKF->mvKeysUn;
-    vector<KeyPoint> kp2 = Frame.mvKeysUn;
-    Mat d1 = pKF->mDescriptors;
-    Mat d2 = Frame.mDescriptors;
-    vector<DMatch> matches_all,matches_gms;
-    BFMatcher matcher(NORM_HAMMING);
-    matcher.match(d1, d2, matches_all);
-    //cout<<"all matcher :"<<matches_all.size()<<endl;
-
-    std::vector<bool> vbInliers;
-    const Size frameSize= Frame.frameSize;
-    gms_matcher gms(kp1,frameSize, kp2,frameSize, matches_all);
-    nmatches = gms.GetInlierMask(vbInliers, false, false);
-    //cout<< "num_inliers after GMS :"<<num_inliers<<endl;
-
-    const vector<MapPoint*> vpMapPointsKF = pKF->GetMapPointMatches();
-
-    for (size_t i = 0; i < vbInliers.size(); ++i)
-    {
-        if (vbInliers[i] == true)
-        {
-            //matches_gms.push_back(matches_all[i]);
-            MapPoint* pMP = vpMapPointsKF[matches_all[i].queryIdx];
-            if(!pMP)
-                continue;
-            if(pMP->isBad())
-                continue;
-            vpMapPointMatches[matches_all[i].trainIdx] = pMP;
-            inliers++;
-        }
-    }
-    return nmatches;
-
-}
-*/
 int ORBmatcher::SearchForInitializationWithGMS(Frame &Frame_1, Frame &Frame_2, vector<int> & vnMatches12) //tracking
 {
     int nmatches=0;
@@ -231,19 +192,6 @@ int ORBmatcher::SearchForInitializationWithGMS(Frame &Frame_1, Frame &Frame_2, v
     gms_matcher gms(kp1,frameSize, kp2,frameSize, matches_all);
     nmatches = gms.GetInlierMask(vbInliers, false, false);
     //cout<< "num_inliers after GMS :"<<nmatches<<endl;
-/*
-    for (size_t i = 0; i < matches_all.size(); ++i)
-    {
-        int queryIdx = matches_all[i].queryIdx;
-        int trainIdx = matches_all[i].trainIdx;
-        if((vnMatches12[queryIdx]==-1)&&(vnMatches21[trainIdx]==-1))
-        {
-                vnMatches12[queryIdx] = trainIdx;
-                vnMatches21[trainIdx] = i;
-                nbestMatches++;
-        }
-    }
-*/
 
     for (size_t i = 0; i < vbInliers.size(); ++i)
     {

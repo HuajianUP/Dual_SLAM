@@ -1,4 +1,6 @@
-# Dual-SLAM
+# Dual-SLAM: A framework for robust single camera navigation
+<img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/framework.png" width="860"/>
+<img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/recovery.png" width="860"/>
 
 ## Publication:
 
@@ -7,8 +9,8 @@
     @article{
      }
 
-# 2. Prerequisites
-We have tested the library in **Ubuntu 18.04**.
+# 1. Prerequisites
+This implementation is based on [ORB-SLAM](https://github.com/raulmur/ORB_SLAM2), an excellent feature-based monocular SLAM. The requirements are almost as same as ORB-SLAM. We have tested this implementation in **Ubuntu 18.04**.
 
 ### C++11 or C++0x Compiler
 We use the new thread and chrono functionalities of C++11.
@@ -28,11 +30,11 @@ We use modified versions of the [DBoW2](https://github.com/dorian3d/DBoW2) libra
 ### GMS (Included in Thirdparty folder)
 [GMS-Feature-Matcher-master](https://github.com/JiawangBian/GMS-Feature-Matcher)
 
-# 3. Building Dual-SLAM library and examples
+# 2. Building
 
 Clone the repository:
 ```
-git clone https://github.com/ Dual_SLAM
+git clone https://github.com/HuajianUP/Dual_SLAM.git Dual_SLAM
 ```
 
 Execute:
@@ -44,7 +46,7 @@ chmod +x build.sh
 
 This will create **libDual_SLAM.so**  at *lib* folder and the executables **dual_tum_mono**, **dual_kitti**, **dual_mono** in *Examples/Dual-SLAM* folder.
 
-# 4. Examples
+# 3. Examples
 
 
 ## KITTI Dataset  
@@ -53,7 +55,7 @@ This will create **libDual_SLAM.so**  at *lib* folder and the executables **dual
 
 2. Execute the following command. Change `KITTIX.yaml`by KITTI00-02.yaml, KITTI03.yaml, KITTI04-12 or KITTI13-21.yaml for sequence 0 to 2, 3, 4 to 12, and 13 to 21 respectively. 
 
-3. In yaml files, change `sequenceDir` to the uncompressed sequence folder and `imageDir` to the image folder. Set `recoveryFlag` to `1` to activate recovery, `initByGMS` to `1` to change initialization algorithm.
+3. In yaml files, change `sequenceDir` to your uncompressed sequence folder and `imageDir` to the image folder. Set `recoveryFlag` to `1` to activate recovery, `initByGMS` to `1` to change initialization algorithm.
 
 ```
 ./Examples/Dual-SLAM/dual_kitti Vocabulary/ORBvoc.bin config/KITTIX.yaml
@@ -65,7 +67,7 @@ This will create **libDual_SLAM.so**  at *lib* folder and the executables **dual
 
 2. Execute the following command. Change `TUM_MonoX.yaml` to TUM_Mono1.yaml or TUM_Mono2.yaml for different sequences respectively. 
 
-3. In yaml files, change `sequenceDir` to the uncompressed sequence folder and `imageDir` to the image folder. Set `recoveryFlag` to `1` to activate recovery, `initByGMS` to `1` to change initialization algorithm.
+3. In yaml files, change `sequenceDir` to your uncompressed sequence folder and `imageDir` to the image folder. Set `recoveryFlag` to `1` to activate recovery, `initByGMS` to `1` to change initialization algorithm.
 
 ```
 ./Examples/Dual-SLAM/dual_tum_mono Vocabulary/ORBvoc.bin config/TUM_MonoX.yaml
@@ -74,10 +76,6 @@ This will create **libDual_SLAM.so**  at *lib* folder and the executables **dual
 ## Processing your own sequences
 You will need to create a settings file with the calibration of your camera. See the settings file provided for the TUM and KITTI datasets for monocular. 
 
-
-# 5. License
-
-ORB-SLAM2 is released under a [GPLv3 license](https://github.com/raulmur/ORB_SLAM2/blob/master/License-gpl.txt). For a list of all code/library dependencies (and associated licenses), please see [Dependencies.md](https://github.com/raulmur/ORB_SLAM2/blob/master/Dependencies.md).
 
 
 ### Reference

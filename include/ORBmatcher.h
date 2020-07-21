@@ -39,15 +39,14 @@ class ORBmatcher
 
 /************************************************************/
 public:
-    int SearchByGMS(Frame &CurrentFrame, KeyFrame* pKF, vector<cv::Point3f> &mvP3D, vector<cv::Point2f> & mvP2D);
-    int UpdateByGMS(KeyFrame* pKF,Frame &Frame);
-    int SearchForInitializationWithGMS(Frame &Frame_1, Frame &Frame_2, vector<int> &vnMatches12);
-    //int SearchByGMS(KeyFrame* pKF,Frame &Frame, vector<MapPoint*> &vpMapPointMatches);
-    int SearchByGMS(KeyFrame* pKF,Frame &Frame, vector<MapPoint*> &vpMapPointMatches, int& inliers);
-    int SearchByGMS(KeyFrame *pKF1, KeyFrame *pKF2, vector<MapPoint *> &vpMatches12);
-    int SearchByGMS(KeyFrame *pKF1, KeyFrame *pKF2, vector<pair<size_t, size_t> > &vMatchedPairs);
+    //int SearchByGMS(Frame &CurrentFrame, KeyFrame* pKF, vector<cv::Point3f> &mvP3D, vector<cv::Point2f> & mvP2D);
+    //int UpdateByGMS(KeyFrame* pKF,Frame &Frame);
+    int SearchForInitializationWithGMS(Frame &Frame_1, Frame &Frame_2, vector<int> &vnMatches12); //Initialization
+    int SearchByGMS(KeyFrame* pKF,Frame &Frame, vector<MapPoint*> &vpMapPointMatches, int& inliers); //TrackReferenceKeyFrame
+    int SearchByGMS(KeyFrame *pKF1, KeyFrame *pKF2, vector<MapPoint *> &vpMatches12); //ComputeSim3
+    int SearchByGMS(KeyFrame *pKF1, KeyFrame *pKF2, vector<pair<size_t, size_t> > &vMatchedPairs); //mapping
     int SearchByGMS(Frame &CurrentFrame, const Frame &LastFrame, vector<cv::Point3f> &mvP3D, vector<cv::Point2f> & mvP2D);
-    int SearchByGMS(Frame &CurrentFrame, const Frame &LastFrame);
+    int SearchByGMS(Frame &CurrentFrame, const Frame &LastFrame); //TrackWithMotionModel
 /************************************************************/    
 
 public:
