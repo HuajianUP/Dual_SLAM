@@ -1,5 +1,7 @@
 # Dual-SLAM: A framework for robust single camera navigation
 
+<img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/framework.jpg" alt="framework" width=300>
+
 <table style="width:100%">
   <tr>
     <th><img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/framework.png" alt="framework" style="width:300;height:448;"></th>
@@ -86,6 +88,6 @@ You will need to create a settings file with the calibration of your camera. See
 
 ### Reference
 
-[ORB-SLAM] Raúl Mur-Artal, J. M. M. Montiel and Juan D. Tardós. ORB-SLAM: A Versatile and Accurate Monocular SLAM System. *IEEE Transactions on Robotics,* vol. 31, no. 5, pp. 1147-1163, 2015.[PDF](http://webdiis.unizar.es/~raulmur/MurMontielTardosTRO15.pdf)**.
+[**ORB-SLAM**] Raúl Mur-Artal, J. M. M. Montiel and Juan D. Tardós. ORB-SLAM: A Versatile and Accurate Monocular SLAM System. *IEEE Transactions on Robotics,* vol. 31, no. 5, pp. 1147-1163, 2015.[PDF](http://webdiis.unizar.es/~raulmur/MurMontielTardosTRO15.pdf).
 
 
