@@ -1,9 +1,12 @@
 # Dual-SLAM: A framework for robust single camera navigation
 
-<div width="1234">
-    <img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/framework.png" alt="framework" style="width:300;height:448;">
-    <img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/recovery.png" alt="recovery" style="width:300;height:499;">
-</div>
+<table style="width:100%">
+  <tr>
+    <th><img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/framework.png" alt="framework" style="width:300;height:448;"></th>
+    <th><img src="https://github.com/HuajianUP/Dual_SLAM/blob/master/img/recovery.png" alt="recovery" style="width:300;height:499;"></th> 
+  </tr>
+</table>
+
 
 ## Publication:
 
