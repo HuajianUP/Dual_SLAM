@@ -44,37 +44,25 @@ chmod +x build.sh
 ./build.sh
 ```
 
-This will create **libDual_SLAM.so**  at *lib* folder and the executables **dual_tum_mono**, **dual_kitti**, **dual_mono** in *Examples/Dual-SLAM* folder.
-
 # 3. Examples
-
 
 ## KITTI Dataset  
 
 1. Download the dataset (grayscale images) from http://www.cvlibs.net/datasets/kitti/eval_odometry.php 
 
-2. Execute the following command. Change `KITTIX.yaml`by KITTI00-02.yaml, KITTI03.yaml, KITTI04-12 or KITTI13-21.yaml for sequence 0 to 2, 3, 4 to 12, and 13 to 21 respectively. 
+2. In general, the more features are extracted, the more stable the system will be, but the processing time per frame will be longer. When extract 2000 features per frame, standard ORB-SLAM still potentially suffers from tracking loss and fail to constructs an intact map on several KITTI sequences (KITTI 00, 01, 02, 08, 09, 12, and 17). You could run the system on these sequences and see the recovery effect.
 
-3. In yaml files, change `sequenceDir` to your uncompressed sequence folder and `imageDir` to the image folder. Set `recoveryFlag` to `1` to activate recovery, `initByGMS` to `1` to change initialization algorithm.
+3. Execute the following command. Change `KITTIX.yaml`by KITTI00-02.yaml, KITTI03.yaml, KITTI04-12 or KITTI13-21.yaml for sequence 0 to 2, 3, 4 to 12, and 13 to 21 respectively. 
+
+4. In yaml files, change `sequenceDir` to your uncompressed sequence folder and `imageDir` to the image folder. Set `recoveryFlag` to `1` to activate recovery, `initByGMS` to `1` to change initialization algorithm.
+
 
 ```
 ./Examples/Dual-SLAM/dual_kitti Vocabulary/ORBvoc.bin config/KITTIX.yaml
 ```
 
-## TUM Monocular Dataset
-
-1. Download a sequence from https://vision.in.tum.de/data/datasets/mono-dataset and undistort sequences.
-
-2. Execute the following command. Change `TUM_MonoX.yaml` to TUM_Mono1.yaml or TUM_Mono2.yaml for different sequences respectively. 
-
-3. In yaml files, change `sequenceDir` to your uncompressed sequence folder and `imageDir` to the image folder. Set `recoveryFlag` to `1` to activate recovery, `initByGMS` to `1` to change initialization algorithm.
-
-```
-./Examples/Dual-SLAM/dual_tum_mono Vocabulary/ORBvoc.bin config/TUM_MonoX.yaml
-```
-
 ## Processing your own sequences
-You will need to create a settings file with the calibration of your camera. See the settings file provided for the TUM and KITTI datasets for monocular. 
+You will need to create a settings file with the calibration of your camera. See the settings file provided for the KITTI datasets for monocular. 
 
 
 

@@ -86,10 +86,6 @@ ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Dual-SLAM)
 
-add_executable(dual_tum_mono
-Examples/Dual-SLAM/dual_tum_mono.cc)
-target_link_libraries(dual_tum_mono ${PROJECT_NAME})
-
 add_executable(dual_kitti
 Examples/Dual-SLAM/dual_kitti.cc)
 target_link_libraries(dual_kitti ${PROJECT_NAME})
