@@ -47,13 +47,14 @@ namespace Dual_SLAM
 		mCurrentFrame = framesNeedRecovery.back();
 		mLastFrame = mCurrentFrame;
 		mpLastKeyFrame = mvRLocalKeyFrames.back();
-
+		//get initial local points
 		UpdateLocalPoints();
 		g2o::Sim3 mg2oScw;
 		cout<<"recovery thread starts: "<<mpMap->KeyFramesInMap()<<" the number of frames Need Recovery: "<<framesNeedRecovery.size()<<"mvRLocalMapPointsWhenBreak: "<<mvRLocalMapPointsWhenBreak.size()<<endl;
 		cout<<"the number of local KeyFrames:"<<mvRLocalKeyFrames.size()<<" last KeyFrame ID:"<< mpLastKeyFrame->mnId <<" SN:"<< mpLastKeyFrame->FrameSN <<endl;
 		cout<<"the number of local MapPoint:"<<mvRLocalMapPoints.size()<<endl;
 		cout<<"KeyFrameId When Break:"<<mRframeSNWhenBreak<<endl;
+		// process frames in buffer
 		for(list<Frame>::reverse_iterator it = framesNeedRecovery.rbegin(); it != framesNeedRecovery.rend(); ++it)
         {
         	mCurrentFrame = *it;
@@ -68,12 +69,13 @@ namespace Dual_SLAM
             	mpLastKeyFrame = mpCurrentKeyFrame;
 
 				if(mState == OK && mCurrentFrame.FrameSN < mRframeSNWhenBreak + 5)
-				{					
+				{	
+					// ready to detect covisbile area				
 					mState = RECOVERING;
 				}
 				if(mState == RECOVERING)
 				{
-					cout<<"Trying to recover ...... "<<endl;
+					cout<<"dectect candidates ...... "<<endl;
 					if(DetectInOldMap(mg2oScw))
 					{				
 						mState = SIM3_READY;
@@ -138,7 +140,7 @@ namespace Dual_SLAM
 			{
 				mLastFrame = mCurrentFrame;
 			}
-
+			// compute the pose of current frame
 			PnPsolver* pSolver = new PnPsolver(mCurrentFrame,vpMapPointMatches);
 	        pSolver->SetRansacParameters(0.99,10,300,4,0.5,5.991);
 	        // Perform 5 Ransac Iterations

@@ -51,7 +51,7 @@ long unsigned int Tracking::frameSNWhenBreak = 0;
 long unsigned int Tracking::KeyFrameIdWhenBreak = 0;
 long unsigned int Tracking::newMapIniKFId = 0;
 bool mbRecoverying = false;
-
+// reset without destroying the map
 void Tracking::SaveAndReset()
 {
     cout << "Save And Reset" << endl;
@@ -122,6 +122,7 @@ Tracking::Tracking(System *pSys, ORBVocabulary* pVoc, FrameDrawer *pFrameDrawer,
     cv::FileStorage fSettings(strSettingPath, cv::FileStorage::READ);
 
     /************************************************************/
+    //get the configuration
     int flag;
     flag = fSettings["recoveryFlag"];
     recoveryFlag = (flag == 1);
@@ -361,6 +362,7 @@ void Tracking::Track()
     if(mState==NOT_INITIALIZED)
     {
         /************************************************************/
+        //store all the frame before reinitialize successfully
         if(recoveryFlag && trackingCount > 0)
         {
             Frame frameTemp = Frame(mCurrentFrame);
@@ -380,6 +382,7 @@ void Tracking::Track()
     else
     {
         /************************************************************/
+        //maintain the buffer
         if(recoveryFlag)
         {
             if(frameBuff.size() > (10 * mMaxFrames))
@@ -596,10 +599,12 @@ void Tracking::Track()
     }
 
     /************************************************************/
+    // first time
     if(trackingCount == 0 && mpMap->KeyFramesInMap() > 5)
     {
         trackingCount = 1;
     }
+    // start recovery
     if(recoveryFlag && readyToRecover && trackingCount > 0 && nNewKeyFrame > 10)
     {
         trackingCount ++;
