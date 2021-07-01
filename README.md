@@ -7,11 +7,16 @@
 ## If you find this work useful in your research, please consider citing our paper:
 
     @inproceedings{hhuang2020dualslam,
-	  title = {{Dual-SLAM}: A framework for robust single camera navigation},
-	  author = {Huajian Huang, Wen-Yan Lin, Siying Liu, Dong Zhang, Sai-Kit Yeung},
-	  booktitle = {Intelligent Robots and Systems (IROS), 2020 IEEE international conference on},
-	  year={2020}
+	  author={Huang, Huajian and Lin, Wen-Yan and Liu, Siying and Zhang, Dong and Yeung, Sai-Kit},
+	  booktitle={2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 
+	  title={Dual-SLAM: A framework for robust single camera navigation}, 
+	  year={2020},
+	  volume={},
+	  number={},
+	  pages={4942-4949},
+	  doi={10.1109/IROS45743.2020.9341513}
 }
+
 
 # 1. Prerequisites
 This implementation is based on [ORB-SLAM](https://github.com/raulmur/ORB_SLAM2), an excellent feature-based monocular SLAM. The requirements are almost as same as ORB-SLAM. We have tested this implementation in **Ubuntu 18.04**.
